@@ -141,39 +141,26 @@ class _FuelCostCalcScreenState extends State<FuelCostCalcScreen>
     
  // Auto fuel price calculation based on Malaysian pricing 
   void calculateFuelCost(String fuelType) {
-    double? distance = double.tryParse(distanceController.text);
-    double? efficiency = double.tryParse(efficiencyController.text);
 
-// If no input is entered by the user
-    if (distance == null || efficiency == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content:
-              Text('Please enter valid numbers for distance and efficiency.'),
-          backgroundColor: Color.fromARGB(255, 238, 118, 109),
-          duration: Duration(seconds: 2),
-        ),
-      );
+ // Parse inputs , value will be default to 0 if invalid
+  double distance = double.tryParse(distanceController.text) ?? 0;
+  double efficiency = double.tryParse(efficiencyController.text) ?? 0;
 
-      setState(() {
-        fuelcost = 0.0;
-      });
-      return;
-    }
+// If the number is less than 0 or invalid, an error message will be produced.
+  if (distance <= 0 || efficiency <= 0) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Please enter valid numbers greater than zero.'),
+        backgroundColor: Color.fromARGB(255, 238, 118, 109),
+        duration: Duration(seconds: 2),
+      ),
+    );
 
-    if (distance <= 0 || efficiency <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Values must be greater than zero.'),
-          backgroundColor: Color.fromARGB(255, 238, 118, 109),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      setState(() {
-        fuelcost = 0.0;
-      });
-      return;
-    }
+    setState(() {
+      fuelcost = 0.0;
+    });
+    return;
+  }
 
     // Automatically set Malaysian fuel prices
     // Reference : https://ringgitplus.com/en/blog/sponsored/petrol-price-malaysia-live-updates-ron95-ron97-diesel.html
@@ -196,4 +183,5 @@ class _FuelCostCalcScreenState extends State<FuelCostCalcScreen>
       fuelcost = cost;
     });
   }
+
 }
