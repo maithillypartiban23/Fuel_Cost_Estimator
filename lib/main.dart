@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Image.asset('assets/fuel.png', scale: 2),
             Text(
-              "Trip Fuel Cost Calculator App",
+              "Trip Fuel Cost Estimator App",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -59,4 +59,5 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
 }
